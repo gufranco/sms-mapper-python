@@ -8,7 +8,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-Hans.md) | [繁�
 [![Release](https://img.shields.io/github/v/release/gufranco/sms-mapper-python)](https://github.com/gufranco/sms-mapper-python/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **813** retail ones on a board with registers, **24** quotes located in the manual and the pinned sources, **12** boards, **844** tests, **100%** statement and branch coverage, no dependencies beyond the standard library
+**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **813** retail ones on a board with registers, **24** quotes located in the manual and the pinned sources, **12** boards, **845** tests, **100%** statement and branch coverage, no dependencies beyond the standard library
 
 ```python
 import smsmapper

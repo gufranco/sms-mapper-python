@@ -40,7 +40,7 @@ GENERATED = frozenset(
     }
 )
 
-NOT_SAMPLED = frozenset({"node_modules", "external"})
+NOT_SAMPLED = frozenset({"node_modules", "external", "docs"})
 
 TEXT_SUFFIXES = (".md", ".py", ".yml", ".yaml", ".json", ".toml", ".txt", ".cfg")
 

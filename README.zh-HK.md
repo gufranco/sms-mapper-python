@@ -8,7 +8,7 @@
 [![Release](https://img.shields.io/github/v/release/gufranco/sms-mapper-python)](https://github.com/gufranco/sms-mapper-python/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-**2,608** 個不同的 Master System 和 Game Gear 映像檔各啟動 **600** 幀，在帶暫存器的電路板上的 **813** 個零售映像檔中屬性失敗為 **0**，在手冊和固定的原始碼中找到 **24** 處引文，**12** 種電路板，**844** 個測試，**100%** 語句和分支覆蓋率，除標準庫外沒有依賴套件
+**2,608** 個不同的 Master System 和 Game Gear 映像檔各啟動 **600** 幀，在帶暫存器的電路板上的 **813** 個零售映像檔中屬性失敗為 **0**，在手冊和固定的原始碼中找到 **24** 處引文，**12** 種電路板，**845** 個測試，**100%** 語句和分支覆蓋率，除標準庫外沒有依賴套件
 
 ```python
 import smsmapper
