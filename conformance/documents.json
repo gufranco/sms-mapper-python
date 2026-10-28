@@ -1,0 +1,32 @@
+{
+  "note": "Every document this package is held to, by identity rather than by name. conformance/documents.py brings each one down again and refuses anything whose digest does not match.",
+  "authority": {
+    "1": "A manufacturer document. What the maker of the hardware printed about it.",
+    "2": "A recording taken off real hardware. Nothing here occupies that rung yet.",
+    "3": "Independent research, for what no manufacturer printed."
+  },
+  "whyNotCarriedHere": "None of these is this project's document, and this repository is public. What is carried is the identity, which is what makes a copy checkable.",
+  "readOn": "2026-10-28",
+  "partsWithNoDocument": {
+    "sms": "No Sega document describes the first Master System's board apart from what it shares with the Mark III. What differs rests on Genesis Plus GX, recorded under notStated.",
+    "sms2": "No Sega document describes the Master System II's board. What differs rests on Genesis Plus GX, recorded under notStated.",
+    "gg": "No Sega document describes the Game Gear's board. Its ports 0 to 6 rest on Genesis Plus GX, recorded under notStated.",
+    "third-party boards": "No maker of a third-party board published it. Every one rests on MAME's sega8 cartridge source, recorded under notStated."
+  },
+  "documents": [
+    {
+      "file": "manufacturer/SoftwareReferenceManualForSegaMarkIIIEU.pdf",
+      "rung": 1,
+      "publisher": "Sega, by its own page footer, Sega Mk3 Hardware Reference Manual (Rev1)",
+      "title": "Software Reference Manual for the SEGA Mark III Console",
+      "date": "undated",
+      "retrievedFrom": "https://segaretro.org/images/d/d6/SoftwareReferenceManualForSegaMarkIIIEU.pdf",
+      "covers": ["mark-iii"],
+      "settles": "The memory map at power on, the RAM and its mirror, port 3E's slot enables, the boot program's slot probe, the frame registers at FFFC to FFFF with their power-on values, the bank shift, the fixed first 1K, the cartridge RAM switch, the eight ports and the controller bits of ports DC, DD and 3F.",
+      "sha256": "166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce",
+      "bytes": 184840,
+      "pages": 45,
+      "provenance": "A retyped text, not a scan: the PDF was produced by Ghostscript and carries typing errors. Its footer names Sega, and nobody records who retyped it or from which printing. Every quote in hardware.json matches its text layer once both are flattened to letters and digits."
+    }
+  ]
+}

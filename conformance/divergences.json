@@ -1,0 +1,157 @@
+{
+  "note": "Every place two sources part on the board, with what each says, which way this package went and why, and the measurement that would close it.",
+  "authority": "hardware.json's authority order decides. A divergence records the cases where following it is a choice rather than a reading.",
+  "readOn": "2026-10-28",
+  "divergences": [
+    {
+      "id": "bank-shift-direction",
+      "severity": "contradiction",
+      "status": "open",
+      "topic": "Which way FFFC's bank shift moves a bank number.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "Each step of the shift adds eight banks: bank 1 with a shift of 01 reaches bank 9.",
+        "quote": "Bank Number Shift",
+        "source": "Software Reference Manual for the SEGA Mark III Console, pages 39 and 40"
+      },
+      "referenceSays": {
+        "rung": 4,
+        "claim": "Each step of the shift takes eight banks away, by adding (4 - shift) times eight.",
+        "quote": "page = (page + ((4 - (slot.fcr[0] & 0x03)) << 3)) % slot.pages;",
+        "source": "Genesis Plus GX core/cart_hw/sms_cart.c, mapper_16k_w, at a5834b3d",
+        "file": "Genesis-Plus-GX/core/cart_hw/sms_cart.c"
+      },
+      "thisPackageDid": {
+        "claim": "Adds eight banks per step, as the manual's figure and its note say.",
+        "why": "The manual's note is unambiguous: bank shift 00 with bank 09 is the address bank shift 01 with bank 1 reaches. MAME implements no shift at all, so no second implementation backs Genesis Plus GX's direction, and the census counts whether any image in the library sets the shift."
+      },
+      "packageFollows": "document",
+      "wouldCloseIt": "On a 4 Mbit Sega cartridge write 01h to FFFC and 01h to FFFF, and compare 8000h with banks 9 and 25."
+    },
+    {
+      "id": "bank-shift-in-mame",
+      "severity": "medium",
+      "status": "open",
+      "topic": "Whether FFFC's bits 0 and 1 do anything.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "They shift every bank number by eight per step.",
+        "quote": "Bank Number Shift",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 39"
+      },
+      "referenceSays": {
+        "rung": 4,
+        "claim": "Nothing: only bits 3 and 2 of FFFC are decoded.",
+        "quote": "m_ram_base = (data & 0x04) >> 2;",
+        "source": "MAME src/devices/bus/sega8/rom.cpp, sega8_rom_device::write_mapper, at 94fc55c9692b180dcb608e2e222e48315db5017a",
+        "file": "mame/src/devices/bus/sega8/rom.cpp"
+      },
+      "thisPackageDid": {
+        "claim": "Shifts, as the manual says.",
+        "why": "The manual is the first rung and prints the shift with a worked figure."
+      },
+      "packageFollows": "document",
+      "wouldCloseIt": "The same measurement as bank-shift-direction."
+    },
+    {
+      "id": "bank-register-width",
+      "severity": "low",
+      "status": "open",
+      "topic": "How many bits of a frame register select a bank.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "Five, under three zero bits; page 21 shows three under five.",
+        "quote": "ROM Page Number for Frame 2",
+        "source": "Software Reference Manual for the SEGA Mark III Console, pages 21 and 39"
+      },
+      "referenceSays": {
+        "rung": 4,
+        "claim": "All eight, modulo the cartridge's page count.",
+        "quote": "m_rom_bank_base[offset - 1] = data  % m_rom_page_count;",
+        "source": "MAME src/devices/bus/sega8/rom.cpp at 94fc55c9692b180dcb608e2e222e48315db5017a; Genesis Plus GX agrees",
+        "file": "mame/src/devices/bus/sega8/rom.cpp"
+      },
+      "thisPackageDid": {
+        "claim": "Takes the whole byte modulo the page count.",
+        "why": "The manual's zero bits describe what software should write, not what the mapper ignores, and the library holds images over 512K that page with the upper bits."
+      },
+      "packageFollows": "reference",
+      "wouldCloseIt": "Write 20h to FFFF on a 512K Sega cartridge and compare 8000h with bank 0."
+    },
+    {
+      "id": "port-dd-bit-3",
+      "severity": "contradiction",
+      "status": "closed",
+      "topic": "Which player's second button port DD bit 3 carries.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "Player 1's, in the joystick table; player 2's, in the trackball table two pages later.",
+        "quote": "P1-SW2",
+        "source": "Software Reference Manual for the SEGA Mark III Console, pages 24 and 26"
+      },
+      "referenceSays": {
+        "rung": 4,
+        "claim": "Player 2's TR line.",
+        "quote": "D3 : Port B TR pin input",
+        "source": "Genesis Plus GX core/io_ctrl.c, io_z80_read, at a5834b3d",
+        "file": "Genesis-Plus-GX/core/io_ctrl.c"
+      },
+      "thisPackageDid": {
+        "claim": "Reads player 2's second button there.",
+        "why": "Player 1's second button already has port DC bit 5 in the same table, the manual's own trackball table gives bit 3 to player 2, and the manual is a retyped copy with other typing errors."
+      },
+      "packageFollows": "document",
+      "wouldCloseIt": "Closed by the manual itself."
+    },
+    {
+      "id": "ram-enable",
+      "severity": "medium",
+      "status": "open",
+      "topic": "Whether port 3E bit 4 switches the system RAM off.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "It does: 0 enables the internal 8K RAM, 1 disables it.",
+        "quote": "Output port $3E controls the memory enables.",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 19"
+      },
+      "referenceSays": {
+        "rung": 4,
+        "claim": "It does nothing; the RAM always answers.",
+        "quote": "sms_cart_switch(~data);",
+        "source": "Genesis Plus GX core/io_ctrl.c io_z80_write and core/cart_hw/sms_cart.c sms_cart_switch, at a5834b3d",
+        "file": "Genesis-Plus-GX/core/io_ctrl.c"
+      },
+      "thisPackageDid": {
+        "claim": "Switches the RAM off, reading FFh and dropping writes.",
+        "why": "The manual is the first rung and names the bit."
+      },
+      "packageFollows": "document",
+      "wouldCloseIt": "Write 10h more than the current value to port 3E from code in ROM and read C000h."
+    },
+    {
+      "id": "fffc-bit-4",
+      "severity": "contradiction",
+      "status": "open",
+      "topic": "What FFFC bit 4 does.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "A RAM write protect switch, with a question mark.",
+        "quote": "RAM Write Protect Sw.?",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 39"
+      },
+      "referenceSays": {
+        "rung": 4,
+        "claim": "It maps the cartridge RAM over C000h to FFFFh.",
+        "quote": "external RAM (lower 16KB) mapped at $C000-$FFFF",
+        "source": "Genesis Plus GX core/cart_hw/sms_cart.c, mapper_16k_w, at a5834b3d",
+        "file": "Genesis-Plus-GX/core/cart_hw/sms_cart.c"
+      },
+      "thisPackageDid": {
+        "claim": "Ignores it.",
+        "why": "The manual itself is unsure what the bit does, MAME ignores it, and the census counts whether any image sets it."
+      },
+      "packageFollows": "neither",
+      "wouldCloseIt": "Set FFFC bit 4 on a Sega cartridge with RAM and read C000h against both RAMs."
+    }
+  ]
+}

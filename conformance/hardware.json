@@ -1,0 +1,331 @@
+{
+  "note": "What Sega printed about the board between the Mark III's processor and everything else, fact by fact, with the sentence each was read from. Facts the manual does not print sit under notStated, each naming where its value came from and the measurement that would settle it. Where two sources part, divergences.json says which way this package went.",
+  "authority": {
+    "order": [
+      "hardware.json facts, for anything Sega printed in its Mark III reference manual",
+      "the Master System and Game Gear cartridge libraries, for which paging registers and slot enables real software reaches, counted by conformance/census.py",
+      "Genesis Plus GX, for the console boards the manual does not describe: the Master System's and Game Gear's port behaviour, and what the bus reads when nothing answers",
+      "MAME's sega8 cartridge source, for every third-party board, which no maker documented",
+      "nothing else"
+    ],
+    "why": "The Mark III manual is the only Sega document that describes the memory map, the slot enables and the paging registers, and it decides every fact it prints. It describes the Mark III, so what the later consoles changed rests on Genesis Plus GX, and the third-party boards rest on MAME. Both are leads rather than authorities and are marked verified false. The cartridge libraries decide which registers real software writes, which is what says how much each unstated corner matters.",
+    "comparedAgainst": {
+      "runner": "conformance/census.py",
+      "what": "Every Master System and Game Gear image in a real library, booted on its board behind the zilog-z80-python processor, with every paging write it makes counted."
+    }
+  },
+  "part": "The Mark III, Master System and Game Gear board: memory map, cartridge paging, port decode and controller ports",
+  "verified": true,
+  "documents": {
+    "markIIIManual": {
+      "publisher": "Sega, by its own page footer",
+      "title": "Software Reference Manual for the SEGA Mark III Console",
+      "file": "manufacturer/SoftwareReferenceManualForSegaMarkIIIEU.pdf",
+      "sha256": "166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce",
+      "readOn": "2026-10-28",
+      "howRead": "Read in full from its text layer, all 45 pages; it is a retyped document with no page images to compare against. Page numbers are the printed footer's, one less than the file's."
+    }
+  },
+  "facts": {
+    "powerOnMap": {
+      "value": {
+        "rom": "0000",
+        "ram": "C000",
+        "size": 8192
+      },
+      "quote": "When the Mk3 is turned on, the memory map contains an 8 kilobyte ROM at $0000, and an 8 Kilobyte RAM at $C000.",
+      "page": "19",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::MemoryMapTest.test_at_power_on_the_boot_rom_is_at_0000_and_ram_at_c000"
+      ]
+    },
+    "ramMirror": {
+      "value": ["C000-DFFF", "E000-FFFF"],
+      "quote": "The RAM is mapped into two places, $C000-$DFFF and $E000-$FFFF.",
+      "page": "19",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::MemoryMapTest.test_the_ram_answers_at_both_places_the_manual_names"
+      ]
+    },
+    "memoryEnables": {
+      "value": {
+        "2": "joysticks",
+        "3": "bios",
+        "4": "ram",
+        "5": "card",
+        "6": "cartridge",
+        "7": "expansion",
+        "active": "low"
+      },
+      "quote": "Output port $3E controls the memory enables.",
+      "page": "19",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::MemoryMapTest.test_each_enable_bit_of_port_3e_turns_its_slot_off_when_set"
+      ]
+    },
+    "bankRegisterEcho": {
+      "value": "FFFF",
+      "quote": "Although this write-only register exists in the memory cartridge, writes to the register are duplicated in the RAM at $FFFF.",
+      "page": "21",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PagingTest.test_a_write_to_a_paging_register_is_duplicated_in_ram"
+      ]
+    },
+    "frameRegisters": {
+      "value": {
+        "FFFD": 0,
+        "FFFE": 1,
+        "FFFF": 2
+      },
+      "quote": "$FFFF - Frame 2 Control Register",
+      "page": "39",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": ["conformance/hardware.test.py::PagingTest.test_fffd_to_ffff_select_frames_0_to_2"]
+    },
+    "powerOnRegisters": {
+      "value": {
+        "FFFC": 0,
+        "FFFD": 0,
+        "FFFE": 1,
+        "FFFF": 2
+      },
+      "quote": "When power is applied, the following data is set by the system ROM program:",
+      "page": "39",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PagingTest.test_a_board_starts_with_the_values_the_system_rom_sets"
+      ]
+    },
+    "frameTwoRam": {
+      "value": {
+        "3": "RAM in frame 2",
+        "2": "RAM bank"
+      },
+      "quote": "ROM/RAM SW. 0=ROM, 1=RAM",
+      "page": "39",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PagingTest.test_fffc_bit_3_swaps_frame_2_for_ram_and_bit_2_picks_its_bank"
+      ]
+    },
+    "bankShift": {
+      "value": {
+        "bits": [0, 1],
+        "adds": 8,
+        "readFrom": "the figure on page 40 and its note that bank shift 00 with bank 09 reaches what bank shift 01 with bank 1 does"
+      },
+      "quote": "Bank Number Shift",
+      "page": "39",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PagingTest.test_the_bank_shift_adds_eight_banks_per_step"
+      ]
+    },
+    "fixedFirstKilobyte": {
+      "value": 1024,
+      "quote": "The lower 1K (1024 bytes) of the Z80 address range is always mapped to the lower 1K (1024 bytes) of ROM to ensure that the reset and interrupt vectors are always available.",
+      "page": "40",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": ["conformance/hardware.test.py::PagingTest.test_the_first_1k_never_moves"]
+    },
+    "ports": {
+      "value": {
+        "3E": {
+          "out": "memory control"
+        },
+        "3F": {
+          "out": "i/o control"
+        },
+        "7E": {
+          "in": "v counter"
+        },
+        "7F": {
+          "in": "h counter",
+          "out": "sound"
+        },
+        "BE": {
+          "in": "vdp data",
+          "out": "vdp data"
+        },
+        "BF": {
+          "in": "vdp control",
+          "out": "vdp control"
+        },
+        "DC": {
+          "in": "port a"
+        },
+        "DD": {
+          "in": "port b"
+        }
+      },
+      "quote": "Eight I/O ports are used by the Mk3:",
+      "page": "23",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_the_eight_ports_reach_what_the_manual_names"
+      ]
+    },
+    "controllerBits": {
+      "value": {
+        "DC": ["P1-up", "P1-down", "P1-left", "P1-right", "P1-SW1", "P1-SW2", "P2-up", "P2-down"],
+        "DD": ["P2-left", "P2-right", "P2-SW1", "P2-SW2", "RESET*"]
+      },
+      "quote": "The bits of input ports $DC and $DD are used for the joystick assembly, gun, and Sports Pad (Trackball).",
+      "page": "24",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_each_controller_line_reads_on_the_bit_the_manual_gives"
+      ]
+    },
+    "strobeLines": {
+      "value": {
+        "directions": [1, 3],
+        "levels": [5, 7]
+      },
+      "quote": "b1,b3 set strobe direction to output",
+      "page": "26",
+      "document": "markIIIManual",
+      "governs": ["mark-iii", "sms", "sms2", "gg"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_port_3f_bits_1_and_3_make_th_an_output_driven_by_bits_5_and_7"
+      ]
+    }
+  },
+  "notStated": {
+    "boardPowerOn": {
+      "value": "Sega's board and the boards modelled on it start at banks 0, 1 and 2, whatever ran before",
+      "verified": false,
+      "why": "The manual says the system ROM writes those values, which leaves a console with no boot program, such as the Game Gear, undecided.",
+      "source": "MAME src/devices/bus/sega8/rom.cpp at 94fc55c9692b180dcb608e2e222e48315db5017a, late_bank_setup; Genesis Plus GX agrees.",
+      "howToSettleIt": "Read FFFD to FFFF's effect on a Game Gear with a cartridge whose first instructions read a byte from each frame before writing any register.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "fullBankByte": {
+      "value": "every bit of a frame register selects, taken modulo the image's 16K page count",
+      "verified": false,
+      "why": "The manual's figure shows three zero bits above a five bit page number, and its page 21 shows a three bit one. Images over 512K exist in the library and page past both.",
+      "source": "MAME rom.cpp write_mapper and Genesis Plus GX sms_cart.c mapper_16k_w, which both take the whole byte modulo the page count.",
+      "howToSettleIt": "Write 20h to FFFF on a 512K Sega cartridge and read 8000h against bank 0.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "shiftIsLive": {
+      "value": "the bank shift applies to every frame at once, including banks selected before it changed",
+      "verified": false,
+      "why": "The manual's figure shows the mapping but not when the shift takes effect.",
+      "source": "No implementation agrees: MAME has no shift, and Genesis Plus GX applies it only to a frame written after it changes.",
+      "howToSettleIt": "On a 4 Mbit Sega cartridge, select bank 1 in frame 2, then write 01h to FFFC, and read 8000h.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "slotPriority": {
+      "value": "with several slots enabled at once, the cartridge answers, then the card, then the expansion slot, then the boot ROM",
+      "verified": false,
+      "why": "The manual names each enable but not what two enabled slots do together.",
+      "source": "Genesis Plus GX sms_cart.c sms_cart_switch at a5834b3d, which picks the cartridge over the boot ROM and models no card or expansion slot.",
+      "howToSettleIt": "Enable the cartridge and the boot ROM together on a Master System and read 0000h.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "openBus": {
+      "value": "FFh, for memory no slot answers, RAM switched off, ports nothing answers and controller ports switched off",
+      "verified": false,
+      "why": "The manual does not say what the bus reads when nothing drives it.",
+      "source": "Genesis Plus GX sms_cart.c, which fills unmapped memory with FFh.",
+      "howToSettleIt": "Switch every slot off from code running in RAM and read 0000h, then read port 3Eh.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "writesReachTheSelectedSlot": {
+      "value": "a write below C000h, or to a paging register, reaches only the slot whose enable is on",
+      "verified": false,
+      "why": "The manual says the register sits in the cartridge but not whether a disabled cartridge still sees the bus.",
+      "source": "Genesis Plus GX, which routes writes through the mapper of the active slot only.",
+      "howToSettleIt": "With the cartridge switched off, write FFFFh from RAM, switch it back on and read 8000h.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "powerOnMemoryControl": {
+      "value": "port 3E holds E0h with a boot program present and A8h without one",
+      "verified": false,
+      "why": "The manual names the map at power on but not the value of port 3E's latch, and a console without a boot program starts where one hands over.",
+      "source": "Genesis Plus GX io_ctrl.c io_reset.",
+      "howToSettleIt": "On a console booting a cartridge without its boot program, read RAM C000h, where the export boot programs store the value they last wrote.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "ioControlReadback": {
+      "value": "a TH or TR line set as an output reads back the level port 3F drives; port 3F starts with every line an input, F5h on the Mark III",
+      "verified": false,
+      "why": "The manual gives port 3F's bits for the gun and the trackball but not what an output reads back.",
+      "source": "Genesis Plus GX io_ctrl.c io_z80_read and io_reset.",
+      "howToSettleIt": "Write 55h and AAh to port 3F on an export Master System and read ports DC and DD after each.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "japaneseOutputsReadZero": {
+      "value": "a Japanese console reads every TH and TR output as 0, which is how software tells the regions apart",
+      "verified": false,
+      "why": "No Sega document describes the export consoles, so none says how they differ.",
+      "source": "Genesis Plus GX io_ctrl.c io_z80_write.",
+      "howToSettleIt": "Write F5h to port 3F on a Japanese Master System and read port DD.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "thLatch": {
+      "value": "a TH level going from low to high on either port asks the video part to latch its counters",
+      "verified": false,
+      "why": "The manual describes the gun latching the beam position, not what latches it when software drives TH itself.",
+      "source": "Genesis Plus GX io_ctrl.c io_z80_write.",
+      "howToSettleIt": "Drive TH low then high from port 3F mid-line and read ports 7E and 7F.",
+      "governs": ["sms", "sms2", "gg"]
+    },
+    "gameGearPorts": {
+      "value": "port 0 holds START in bit 7 and the region in bits 6 and 5; ports 1 to 5 the link port at 00, FF, 00, FF and 00; port 1 reads through port 2's direction bits; port 5 keeps bits 3 to 7; port 6 reads FFh",
+      "verified": false,
+      "why": "No Sega document for the Game Gear is known to be public.",
+      "source": "Genesis Plus GX io_ctrl.c io_reset, io_gg_read and io_gg_write.",
+      "howToSettleIt": "Read ports 0 to 6 on a Game Gear of each region straight after power on.",
+      "governs": ["gg"]
+    },
+    "gameGearStart": {
+      "value": "START raises no NMI in the Game Gear's own mode and acts as pause in Master System mode",
+      "verified": false,
+      "why": "No Sega document for the Game Gear is known to be public.",
+      "source": "Genesis Plus GX system.c, which skips the pause NMI in Game Gear mode.",
+      "howToSettleIt": "Press START on a Game Gear running a Master System cartridge with an NMI handler that counts.",
+      "governs": ["gg"]
+    },
+    "noWaitStates": {
+      "value": "the board inserts no wait state on any memory or port access",
+      "verified": false,
+      "why": "The manual says nothing of access timing on the board.",
+      "source": "Neither MAME nor Genesis Plus GX inserts any on these consoles.",
+      "howToSettleIt": "A logic analyser on WAIT of a running Master System and Game Gear.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "imageMirroring": {
+      "value": "a read past the end of an image wraps to its start",
+      "verified": false,
+      "why": "A cartridge's ROM decodes only the address lines it has, so smaller images repeat, but the manual does not say so and odd sizes such as 48K are not powers of two.",
+      "source": "MAME rom.cpp, whose own comment marks mirroring of sizes that are not powers of two as not done; this package wraps by the image length.",
+      "howToSettleIt": "Read a 48K Sega cartridge at bank 3.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    },
+    "thirdPartyBoards": {
+      "value": "Codemasters, 4 PAK, Zemina, Nemesis, Janggun, Hi-Com, Korean, Korean 188-in-1, Korean no-bank, Seo Jin and the 93C46 EEPROM board, register by register as smsmapper models them",
+      "verified": false,
+      "why": "No maker of a third-party board published its design.",
+      "source": "MAME src/devices/bus/sega8/rom.cpp and src/devices/machine/eepromser.cpp at 94fc55c9692b180dcb608e2e222e48315db5017a, BSD-3-Clause; facts only, no code is taken.",
+      "howToSettleIt": "Each board's census row: the images MAME lists on it boot and write its registers. A board without a row has nothing in the library exercising it.",
+      "governs": ["mark-iii", "sms", "sms2", "gg"]
+    }
+  }
+}

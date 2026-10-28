@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: sms-mapper-python
+message: >-
+  If you use this work, or the facts it was settled against, please cite it.
+type: software
+authors:
+  - given-names: Gustavo
+    family-names: Franco
+    alias: gufranco
+repository-code: https://github.com/gufranco/sms-mapper-python
+url: https://github.com/gufranco/sms-mapper-python
+abstract: >-
+  A model of the board between the processor and everything else on the Sega Mark III, both Master Systems and the Game Gear: the memory map and its slot enables, the system RAM and its mirror, Sega's paging with its bank shift and cartridge RAM, eleven third-party paging boards, the port decode, the controller ports with port 3F, and the Game Gear's own ports. Every fact names the page of Sega's Mark III reference manual it was read from, and every fact the manual does not print names the implementation it came from and the measurement that would settle it.
+keywords:
+  - sega
+  - master-system
+  - game-gear
+  - mark-iii
+  - mapper
+  - bank-switching
+  - hardware-model
+  - conformance
+license: MIT
+version: 0.0.0
