@@ -4,9 +4,11 @@
 
 [English](README.md) | [日本語](README.ja.md) | 简体中文 | [繁體中文（香港）](README.zh-HK.md)
 
-[![CI](https://github.com/gufranco/sms-mapper-python/actions/workflows/ci.yml/badge.svg)](https://github.com/gufranco/sms-mapper-python/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/gufranco/sms-mapper-python)](https://github.com/gufranco/sms-mapper-python/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![ci](https://img.shields.io/github/actions/workflow/status/gufranco/sms-mapper-python/ci.yml?branch=main&style=flat-square&label=ci)](https://github.com/gufranco/sms-mapper-python/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/gufranco/sms-mapper-python?style=flat-square&label=release)](https://github.com/gufranco/sms-mapper-python/releases/latest)
+[![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat-square)](https://github.com/gufranco/sms-mapper-python/actions/workflows/ci.yml)
+[![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
+[![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
 **2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，在带寄存器的电路板上的 **813** 个零售映像中属性失败为 **0**，在手册和固定的源码中定位到 **24** 处引文，**12** 种电路板，**845** 个测试，**100%** 语句和分支覆盖率，除标准库外无依赖
 
