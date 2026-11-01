@@ -307,6 +307,17 @@ class RunTest(unittest.TestCase):
         # Assert
         self.assertEqual(sorted(run.seen.handheld_ports), [0, 6])
 
+    def test_a_game_gear_in_master_system_mode_drops_a_write_to_port_2(self) -> None:
+        # Arrange
+        code = bytes([0x3E, 0xFF, 0xD3, 0x02]) + LOOP
+        run = harness.Run(program(code), model="gg", handheld_mode=False)
+
+        # Act
+        run.run_frames(1)
+
+        # Assert
+        self.assertEqual((run.console.handheld_mode, dict(run.seen.memory_control)), (False, {}))
+
     def test_a_master_system_starts_where_the_export_boot_program_hands_over(self) -> None:
         # Arrange
         image = program(LOOP)

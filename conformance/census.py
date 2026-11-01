@@ -18,7 +18,9 @@ HANDHELD = ".gg"
 
 SUFFIXES = (CONSOLE, HANDHELD)
 
-MODELS = {CONSOLE: "sms", HANDHELD: "gg"}
+SMS_MODE = "sms mode"
+
+MODELS = {CONSOLE: ("sms", True), HANDHELD: ("gg", True), SMS_MODE: ("gg", False)}
 
 EUROPEAN_SET = "Europe - A-Z"
 
@@ -70,6 +72,17 @@ Distinct = tuple[bool, bytes, str, str | None, str]
 def boards(where: Path = BOARDS) -> dict[str, str]:
     held = json.loads(where.read_text())["boards"]
     return {str(one["sha1"]): str(one["board"]) for one in held}
+
+
+def sms_mode(where: Path = BOARDS) -> frozenset[str]:
+    held = json.loads(where.read_text())["smsMode"]
+    return frozenset(str(one["sha1"]) for one in held)
+
+
+def console_of(rom: bytes, name: str, pinned: frozenset[str]) -> str:
+    if hashlib.sha1(rom, usedforsecurity=False).hexdigest() in pinned:
+        return SMS_MODE
+    return _suffix(name)
 
 
 def _members(where: Path) -> Iterator[Image]:
@@ -135,9 +148,10 @@ def _seen(run: harness.Run, raised: str | None) -> dict[str, Any]:
 def examine(
     job: tuple[bytes, int, str, str, str], build: type[harness.Run] = harness.Run
 ) -> dict[str, Any]:
-    rom, frames, suffix, board, region = job
+    rom, frames, console, board, region = job
     chosen = board if modelled(board) else DEFAULT_BOARD
-    run = build(rom, board=chosen, model=MODELS[suffix], region=region)
+    model, handheld_mode = MODELS[console]
+    run = build(rom, board=chosen, model=model, region=region, handheld_mode=handheld_mode)
     try:
         run.run_frames(frames)
     except Exception as error:
@@ -166,10 +180,14 @@ def _suffix(name: str) -> str:
 
 
 def _results(
-    images: list[Distinct], frames: int, jobs: int, build: type[harness.Run]
+    images: list[Distinct],
+    frames: int,
+    jobs: int,
+    build: type[harness.Run],
+    pinned: frozenset[str],
 ) -> list[dict[str, Any]]:
     work = [
-        (rom, frames, _suffix(name), board or DEFAULT_BOARD, region)
+        (rom, frames, console_of(rom, name, pinned), board or DEFAULT_BOARD, region)
         for _, rom, name, board, region in images
     ]
     if jobs <= 1:
@@ -245,8 +263,9 @@ def take(
     listed: Path | None = None,
     build: type[harness.Run] = harness.Run,
 ) -> Mapping[str, Any]:
-    count, images = _distinct(paths, boards(BOARDS if listed is None else listed))
-    results = _results(images, frames, jobs, build)
+    where = BOARDS if listed is None else listed
+    count, images = _distinct(paths, boards(where))
+    results = _results(images, frames, jobs, build, sms_mode(where))
     return {
         "listings": count,
         "images": len(images),

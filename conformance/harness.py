@@ -269,12 +269,20 @@ class Run:
     __slots__ = ("board", "console", "cpu", "frames", "seen", "video")
 
     def __init__(
-        self, image: bytes, board: str = "sega", model: str = "sms", region: str = "usa"
+        self,
+        image: bytes,
+        board: str = "sega",
+        model: str = "sms",
+        region: str = "usa",
+        *,
+        handheld_mode: bool = True,
     ) -> None:
         z80 = _processor()
         cartridge = smsmapper.Cartridge(image, board=board, ram=CARTRIDGE_RAM.get(board, 0))
         self.board = cartridge
-        self.console = smsmapper.Console(model, cartridge=cartridge, region=region)
+        self.console = smsmapper.Console(
+            model, cartridge=cartridge, region=region, handheld_mode=handheld_mode
+        )
         self.video = Video(pal=region == PAL_REGION and not self.console.model.handheld)
         self.seen = Seen()
         self.frames = 0

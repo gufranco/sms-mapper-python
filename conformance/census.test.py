@@ -18,6 +18,10 @@ LOOP = bytes([0x18, 0xFE])
 
 PAGES = bytes([0x3E, 0x05, 0x32, 0xFF, 0xFF]) + LOOP
 
+SWITCHES_OFF_ON_A_MASTER_SYSTEM = bytes([0x3E, 0xFF, 0xD3, 0x02]) + PAGES
+
+RC_GRAND_PRIX_USA = "c789e7f9450c8eaa08be1bf6c39e877973216431"
+
 PAL_ONLY = (
     bytes([0xDB, 0xBF, 0xDB, 0xBF, 0xA7, 0xF2, 0x02, 0x00, 0x01, 0x96, 0x0A])
     + bytes([0x0B, 0x79, 0xB0, 0xC2, 0x0B, 0x00, 0xDB, 0xBF, 0xA7, 0xFA, 0x1C, 0x00])
@@ -41,7 +45,14 @@ def a_library(files: dict[str, dict[str, bytes]]) -> Path:
 def a_board_list(rom: bytes, board: str) -> Path:
     where = Path(tempfile.mkdtemp()) / "boards.json"
     sha1 = hashlib.sha1(rom, usedforsecurity=False).hexdigest()
-    where.write_text(json.dumps({"boards": [{"sha1": sha1, "board": board}]}))
+    where.write_text(json.dumps({"boards": [{"sha1": sha1, "board": board}], "smsMode": []}))
+    return where
+
+
+def a_pin_list(rom: bytes) -> Path:
+    where = Path(tempfile.mkdtemp()) / "boards.json"
+    sha1 = hashlib.sha1(rom, usedforsecurity=False).hexdigest()
+    where.write_text(json.dumps({"boards": [], "smsMode": [{"sha1": sha1, "software": "a"}]}))
     return where
 
 
@@ -109,6 +120,16 @@ class WalkTest(unittest.TestCase):
         # Assert
         self.assertEqual(found, "codemasters")
 
+    def test_the_board_list_names_the_cartridges_that_ground_pin_42(self) -> None:
+        # Arrange
+        listed = census.BOARDS
+
+        # Act
+        found = census.sms_mode(listed)
+
+        # Assert
+        self.assertIn(RC_GRAND_PRIX_USA, found)
+
 
 class ExamineTest(unittest.TestCase):
     def test_an_image_that_pages_reports_its_writes(self) -> None:
@@ -130,6 +151,16 @@ class ExamineTest(unittest.TestCase):
 
         # Assert
         self.assertEqual(found["handheldPorts"], [0])
+
+    def test_a_pinned_image_runs_on_a_game_gear_in_master_system_mode(self) -> None:
+        # Arrange
+        job = (image(SWITCHES_OFF_ON_A_MASTER_SYSTEM), 2, census.SMS_MODE, "sega", "usa")
+
+        # Act
+        found = census.examine(job)
+
+        # Assert
+        self.assertEqual((found["memoryControl"], found["writes"]), ([], 1))
 
     def test_an_image_that_throws_reports_what_it_threw_and_where(self) -> None:
         # Arrange
@@ -247,6 +278,19 @@ class PropertyTest(unittest.TestCase):
             found["culprits"][census.RAISES_NOTHING],
         )
         self.assertEqual(held, (1, ["Bad.sms: ValueError: bad opcode at frame 0"]))
+
+
+class PinTest(unittest.TestCase):
+    def test_an_image_the_list_pins_to_master_system_mode_runs_in_it(self) -> None:
+        # Arrange
+        rom = image(SWITCHES_OFF_ON_A_MASTER_SYSTEM)
+        where = a_library({"1 US - A-Z.zip": {"A (USA).sms": rom}})
+
+        # Act
+        found = taken([where], a_pin_list(rom))
+
+        # Assert
+        self.assertEqual((found["memoryControl"], found["properties"][census.PAGES]), ({}, 0))
 
 
 class TallyTest(unittest.TestCase):

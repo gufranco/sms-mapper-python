@@ -10,7 +10,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-Hans.md) | [繁�
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **813** retail ones on a board with registers, **24** quotes located in the manual and the pinned sources, **12** boards, **848** tests, **100%** statement and branch coverage, no dependencies beyond the standard library
+**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **813** retail ones on a board with registers, **24** quotes located in the manual and the pinned sources, **12** boards, **852** tests, **100%** statement and branch coverage, no dependencies beyond the standard library
 
 ```python
 import smsmapper
@@ -228,7 +228,7 @@ Two implementations disagree with the manual on the shift, and [`conformance/div
 python3 -m conformance.census "external/Master EverDrive" "external/EverDrive GG" --frames 600 --jobs 12
 ```
 
-The census boots every image in a Master System and Game Gear library behind the `zilog-z80-python` processor, on the board MAME's software lists name for it, and counts every write that reaches one of the board's registers. A `.sms` image runs on a Master System and a `.gg` image on a Game Gear. An image that only the European set lists runs on a European console, whose 50 Hz frame is 313 lines; every other image runs on a 262-line American one. Some European cartridges time a frame at power-on and stop on a 60 Hz console, so they page only at 50 Hz. The video part is a stand-in that only counts lines, raises the frame and line interrupts and answers the counters, because what the census asks about is paging, not pictures. It accepts directories, zip archives and single images, counts each distinct image once by digest, prints a summary, writes [`conformance/corpus.json`](conformance/corpus.json), and exits 1 when a property breaks.
+The census boots every image in a Master System and Game Gear library behind the `zilog-z80-python` processor, on the board MAME's software lists name for it, and counts every write that reaches one of the board's registers. A `.sms` image runs on a Master System and a `.gg` image on a Game Gear, except a Game Gear cartridge that MAME's list marks as grounding pin 42, which runs on a Game Gear in Master System mode. An image that only the European set lists runs on a European console, whose 50 Hz frame is 313 lines; every other image runs on a 262-line American one. Some European cartridges time a frame at power-on and stop on a 60 Hz console, so they page only at 50 Hz. The video part is a stand-in that only counts lines, raises the frame and line interrupts and answers the counters, because what the census asks about is paging, not pictures. It accepts directories, zip archives and single images, counts each distinct image once by digest, prints a summary, writes [`conformance/corpus.json`](conformance/corpus.json), and exits 1 when a property breaks.
 
 Two properties gate the run: the model raises no exception on any image, and every retail image over 48K on a board with registers writes one of them within the frame bound. A cartridge that never pages could not show what lies past its first 48K, so a retail one that stays silent is a board this package has wrong. [`conformance/boards.json`](conformance/boards.json) names, by whole-file SHA-1 as MAME's software lists record them, the images built on another board. The Master Gear adapter and the X-Terminator cheat device are not modelled, so those images run on Sega's paging and are counted apart.
 
@@ -246,13 +246,13 @@ Two properties gate the run: the model raises no exception on any image, and eve
 | Images on `korean`, and how many wrote a register           | 4 of 6         |
 | Images on `korean_nb`, and how many wrote a register        | 0 of 5         |
 | Images on `nemesis`, and how many wrote a register          | 1 of 1         |
-| Images on `sega`, and how many wrote a register             | 2,293 of 2,549 |
+| Images on `sega`, and how many wrote a register             | 2,292 of 2,549 |
 | Images on `zemina`, and how many wrote a register           | 8 of 8         |
-| Set FFFC's bank shift                                       | 21             |
-| Enabled cartridge RAM through FFFC bit 3                    | 185            |
+| Set FFFC's bank shift                                       | 20             |
+| Enabled cartridge RAM through FFFC bit 3                    | 184            |
 | Chose the second RAM bank through FFFC bit 2                | 20             |
-| Selected a bank past the end of the image                   | 294            |
-| Never wrote a board register                                | 269            |
+| Selected a bank past the end of the image                   | 293            |
+| Never wrote a board register                                | 270            |
 | On a board this package does not model                      | 0              |
 
 [`conformance/corpus.json`](conformance/corpus.json) holds those counts and nothing from any cartridge, so the suite checks them on a machine with no library.

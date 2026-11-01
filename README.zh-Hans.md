@@ -10,7 +10,7 @@
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，在带寄存器的电路板上的 **813** 个零售映像中属性失败为 **0**，在手册和固定的源码中定位到 **24** 处引文，**12** 种电路板，**848** 个测试，**100%** 语句和分支覆盖率，除标准库外无依赖
+**2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，在带寄存器的电路板上的 **813** 个零售映像中属性失败为 **0**，在手册和固定的源码中定位到 **24** 处引文，**12** 种电路板，**852** 个测试，**100%** 语句和分支覆盖率，除标准库外无依赖
 
 ```python
 import smsmapper
@@ -228,7 +228,7 @@ no board is called 'sega-5000'; the boards are ['4pak', 'codemasters', 'eeprom',
 python3 -m conformance.census "external/Master EverDrive" "external/EverDrive GG" --frames 600 --jobs 12
 ```
 
-普查把 Master System 和 Game Gear 卡带库中的每个映像，放在 MAME 软件列表为其指定的电路板上，在 `zilog-z80-python` 处理器后面启动，并统计到达电路板寄存器的每次写入。`.sms` 映像运行在 Master System 上，`.gg` 映像运行在 Game Gear 上。只被欧洲合集收录的映像运行在欧洲版主机上，其 50 Hz 的一帧为 313 行；其余映像运行在 262 行的美国版主机上。有些欧洲卡带在开机时测量一帧的长度，在 60 Hz 主机上会停住，因此只在 50 Hz 下分页。视频部件是一个替身，只计行数、发出帧中断和行中断并应答计数器，因为普查关心的是分页，而不是画面。它接受目录、ZIP 压缩包和单个映像，按摘要把每个不同的映像只计一次，打印摘要，写出 [`conformance/corpus.json`](conformance/corpus.json)，并在某项性质被破坏时以 1 退出。
+普查把 Master System 和 Game Gear 卡带库中的每个映像，放在 MAME 软件列表为其指定的电路板上，在 `zilog-z80-python` 处理器后面启动，并统计到达电路板寄存器的每次写入。`.sms` 映像运行在 Master System 上，`.gg` 映像运行在 Game Gear 上；但 MAME 清单标明把第 42 针接地的 Game Gear 卡带，则运行在 Master System 模式的 Game Gear 上。只被欧洲合集收录的映像运行在欧洲版主机上，其 50 Hz 的一帧为 313 行；其余映像运行在 262 行的美国版主机上。有些欧洲卡带在开机时测量一帧的长度，在 60 Hz 主机上会停住，因此只在 50 Hz 下分页。视频部件是一个替身，只计行数、发出帧中断和行中断并应答计数器，因为普查关心的是分页，而不是画面。它接受目录、ZIP 压缩包和单个映像，按摘要把每个不同的映像只计一次，打印摘要，写出 [`conformance/corpus.json`](conformance/corpus.json)，并在某项性质被破坏时以 1 退出。
 
 运行由两项性质把关：模型在任何映像上都不抛出异常，以及位于有寄存器的电路板上、大于 48K 的每个零售映像，在帧数上限内写入其中某个寄存器。不分页的卡带无法显示前 48K 之后的内容，所以保持沉默的零售映像意味着本包把电路板弄错了。[`conformance/boards.json`](conformance/boards.json) 按 MAME 软件列表的记录，以整个文件的 SHA-1 列出建在其他电路板上的映像。Master Gear 转接器和 X-Terminator 作弊设备没有建模，因此这些映像在世嘉的分页上运行并单独计数。
 
@@ -246,13 +246,13 @@ python3 -m conformance.census "external/Master EverDrive" "external/EverDrive GG
 | `korean` 上的映像，以及其中写过寄存器的数量      | 6 个中的 4 个         |
 | `korean_nb` 上的映像，以及其中写过寄存器的数量   | 5 个中的 0 个         |
 | `nemesis` 上的映像，以及其中写过寄存器的数量     | 1 个中的 1 个         |
-| `sega` 上的映像，以及其中写过寄存器的数量        | 2,549 个中的 2,293 个 |
+| `sega` 上的映像，以及其中写过寄存器的数量        | 2,549 个中的 2,292 个 |
 | `zemina` 上的映像，以及其中写过寄存器的数量      | 8 个中的 8 个         |
-| 设置过 FFFC 的存储体偏移                         | 21                    |
-| 通过 FFFC 第 3 位启用卡带 RAM                    | 185                   |
+| 设置过 FFFC 的存储体偏移                         | 20                    |
+| 通过 FFFC 第 3 位启用卡带 RAM                    | 184                   |
 | 通过 FFFC 第 2 位选择第二个 RAM 存储体           | 20                    |
-| 选择过超出映像末尾的存储体                       | 294                   |
-| 从未写过电路板寄存器                             | 269                   |
+| 选择过超出映像末尾的存储体                       | 293                   |
+| 从未写过电路板寄存器                             | 270                   |
 | 在本包未建模的电路板上                           | 0                     |
 
 [`conformance/corpus.json`](conformance/corpus.json) 只保存这些计数，不含任何卡带的内容，因此测试套件在没有卡带库的机器上也能检查它们。

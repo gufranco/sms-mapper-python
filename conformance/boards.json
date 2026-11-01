@@ -1,5 +1,5 @@
 {
-  "note": "Every cartridge image MAME's software lists place on a board other than Sega's own paging, by whole-file SHA-1. The census runs each on the board named here, except the two this package does not model, the Master Gear adapter and the X-Terminator cheat device, which run on Sega's paging and are counted apart.",
+  "note": "Every cartridge image MAME's software lists place on a board other than Sega's own paging, by whole-file SHA-1. The census runs each on the board named here, except the two this package does not model, the Master Gear adapter and the X-Terminator cheat device, which run on Sega's paging and are counted apart. Under smsMode, every Game Gear cartridge MAME's list marks as grounding pin 42, which puts the Game Gear in Master System mode; the census runs each on a Game Gear in that mode.",
   "source": "MAME hash/sms.xml and hash/gamegear.xml at commit 94fc55c9692b180dcb608e2e222e48315db5017a, https://github.com/mamedev/mame. Facts only; no code is taken.",
   "boards": [
     {
@@ -391,6 +391,212 @@
       "board": "korean_nb",
       "software": "xyzolog",
       "list": "sms.xml"
+    }
+  ],
+  "smsMode": [
+    {
+      "sha1": "0672814b9fb20dd217141f7853db300343f2c1ea",
+      "software": "ppersia"
+    },
+    {
+      "sha1": "06bbeb784f913b37f58c2581c66d4ecb099deace",
+      "software": "castlill"
+    },
+    {
+      "sha1": "09a2acf3ed90101be2629384c5c702f6a5408035",
+      "software": "excdizzyp"
+    },
+    {
+      "sha1": "0fb4200fa291fe57cd7be2ee73ac2d71ae3c005e",
+      "software": "outrneur"
+    },
+    {
+      "sha1": "11cb726c497482895f4f6f6b424615fe52f18a18",
+      "software": "seishun"
+    },
+    {
+      "sha1": "14b19ee7f6ef398474fe56beac2327ee14ce6157",
+      "software": "paperboytw"
+    },
+    {
+      "sha1": "2b3bb8fd76fe706d7e564b372d2d71dfce53cb1b",
+      "software": "jangpun2"
+    },
+    {
+      "sha1": "3424fea350cde85a3840938a615906bb37769811",
+      "software": "greatbsk"
+    },
+    {
+      "sha1": "3772e9dc07b15de62326ee78981ec0b6f4387590",
+      "software": "stetris"
+    },
+    {
+      "sha1": "3b411c14c38ecc4cfbddd69362bbb70bed10eb9f",
+      "software": "cybers"
+    },
+    {
+      "sha1": "3b699b84b7ebaa3a2cc7443b34909771e6518c55",
+      "software": "secret"
+    },
+    {
+      "sha1": "3f4b02b6545a3ce0c8b69c4e6791da01a7d7f285",
+      "software": "finalbb"
+    },
+    {
+      "sha1": "434a9a21a2662bff1cd2246528eebce8a5116c1b",
+      "software": "strtbatl"
+    },
+    {
+      "sha1": "43b822bbccdc666e5bfb7f86f690516ac251b0b3",
+      "software": "strider"
+    },
+    {
+      "sha1": "442ad0bdbde2500a4b910382a7141713ab424b3f",
+      "software": "par"
+    },
+    {
+      "sha1": "53fd026008be77cd0cda7080e67a87a7bad33a6a",
+      "software": "olympgld"
+    },
+    {
+      "sha1": "54a8cf79fac1f4c1dd1b2350b6934e42fc766020",
+      "software": "blackblt"
+    },
+    {
+      "sha1": "59e2fab18a0244efcc9cb9ad1e4ed3a1c777948d",
+      "software": "wwfsteel"
+    },
+    {
+      "sha1": "5c1fef3b564fe1373101e5e331b38949dd2e583b",
+      "software": "argosnj"
+    },
+    {
+      "sha1": "5f7ddc93de74c9713bba2a6ff117efc851483a8d",
+      "software": "hokuto"
+    },
+    {
+      "sha1": "6d6209c642b854eaa43da81b311c04a7579d9a17",
+      "software": "chasehq"
+    },
+    {
+      "sha1": "7218b455819dd965ffcb720ad11458270bd7f3c6",
+      "software": "sheroa"
+    },
+    {
+      "sha1": "76464809826a0ceed7cfd68a8fe5e06c06bd96fc",
+      "software": "predatr2"
+    },
+    {
+      "sha1": "7820699ee6b214f3f02f724f4d7891184caf93f8",
+      "software": "ppersiau"
+    },
+    {
+      "sha1": "7c32614ef0fb330fff0934ef16a6eca8369743da",
+      "software": "quartet"
+    },
+    {
+      "sha1": "80a5bdc835ed63a0cb19d46aae99dfb78719e091",
+      "software": "ppersiatw"
+    },
+    {
+      "sha1": "908b532564c67014bf881a524ac9ad186f9013c9",
+      "software": "rtype"
+    },
+    {
+      "sha1": "90a556bd3e1c2b0a5b66f7a778193d2edf09942f",
+      "software": "wondrkid"
+    },
+    {
+      "sha1": "93d93e3f79b7e206c0c58187e3ed047222999af6",
+      "software": "tblade"
+    },
+    {
+      "sha1": "94f1113a6b19b7fa080114c65e8d0bd67f9117d7",
+      "software": "shero"
+    },
+    {
+      "sha1": "96bf8a67919218aac91fb74cde80a16f90df77d5",
+      "software": "rastan"
+    },
+    {
+      "sha1": "a63bdab47d3f648537cad25e4161ac55a23c8137",
+      "software": "beast"
+    },
+    {
+      "sha1": "ad438b8ed5aafab4ea615a4aaa75d2ddf7ba81c4",
+      "software": "ddragontw"
+    },
+    {
+      "sha1": "b21b5ce444e483cbca79c709eea6a902d53af1d7",
+      "software": "sspirits"
+    },
+    {
+      "sha1": "b5fabb4a9a43f7496f2ca40979348b59fde5d14f",
+      "software": "shdancer"
+    },
+    {
+      "sha1": "b6a13d51c72b576738f0d7e8e328db2ffeb0b38c",
+      "software": "fantdizz"
+    },
+    {
+      "sha1": "b757b45a07ae6530443862e0eca547e16c23b4a3",
+      "software": "chasehqj"
+    },
+    {
+      "sha1": "b7e5ae436ccaa9984297b0c14969922d189cb10c",
+      "software": "olympglda"
+    },
+    {
+      "sha1": "c3305d745792a931ea92da6e6457c43d7cc45cf2",
+      "software": "aerialastw"
+    },
+    {
+      "sha1": "c789e7f9450c8eaa08be1bf6c39e877973216431",
+      "software": "rcgp"
+    },
+    {
+      "sha1": "cb36be9b9f67966ffcc6c322a37b3936297e1461",
+      "software": "lordswrd"
+    },
+    {
+      "sha1": "cb4a08b89cc24154328309cab54bfd9d83e4754f",
+      "software": "skickoff"
+    },
+    {
+      "sha1": "d2580137c641192d7faa98dbf8c715623e7d0bed",
+      "software": "castlillj"
+    },
+    {
+      "sha1": "d5c8fc8d931b7fb3c4ff88bcf206a606bac3f98a",
+      "software": "forgottn"
+    },
+    {
+      "sha1": "da0bf41dc5fd68a191d0f02fb1213ffdb006d7b8",
+      "software": "alexkidd"
+    },
+    {
+      "sha1": "db3c0686715373242911f8471a1e91673811d62a",
+      "software": "excdizzy"
+    },
+    {
+      "sha1": "dd842a7294eee7badf4353fbe3e5d87dd570c671",
+      "software": "outrneuru"
+    },
+    {
+      "sha1": "e3bb68ce42be58fca1158568012570e5366cd647",
+      "software": "kungfuk"
+    },
+    {
+      "sha1": "e3da56644c098d07947b1ffd9465002616a69d30",
+      "software": "dokidoki"
+    },
+    {
+      "sha1": "e4e3464aa4b9378761663ae69037308a5e3411f0",
+      "software": "submarin"
+    },
+    {
+      "sha1": "f009d56f5a47068b991f44742c836ba2374f84a2",
+      "software": "cavedude"
     }
   ]
 }

@@ -125,7 +125,10 @@ needs either.
 A Master System run starts where the export boot program hands over: the
 stack at DFF0h and RAM C000h holding ABh, the values `sega-sms-python` reads
 when it runs the original BIOS 1.3 and 2.0 up to the cartridge's first
-instruction. A Game Gear run starts from its reset values.
+instruction. A Game Gear run starts from its reset values. A Game Gear
+cartridge that grounds pin 42, which `smsMode` in
+[`conformance/boards.json`](conformance/boards.json) lists from MAME, runs on a
+Game Gear in Master System mode, whatever its file is called.
 
 ## Test cartridges
 
@@ -252,7 +255,7 @@ smsmapper/
 conformance/
   census.py         boots every image in a library you own and counts its paging
   harness.py        the processor, this package and a stand-in for the video part
-  boards.json       which images need a board other than Sega's paging, from MAME's lists
+  boards.json       which images need a board other than Sega's paging, and which ground pin 42, from MAME's lists
   corpus.json       the census counts, holding nothing from any cartridge
   corpus.py         replays them
   testroms.json     every test cartridge that exercises the board, and what each run printed
