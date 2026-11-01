@@ -62,7 +62,7 @@ Genesis Plus GX give three different answers.
 the test in [`conformance/hardware.test.py`](conformance/hardware.test.py) that
 holds it.
 
-**Not settled: 18 things**, every entry under `notStated` and three questions
+**Not settled: 19 things**, every entry under `notStated` and three questions
 only the divergences carry, each in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md) with what
 would close it. Do not close one by argument.
 
@@ -288,9 +288,11 @@ not.
 **Bank numbers wrap by the image's own page count.** A 128K image selecting
 bank 9 shows bank 1, and the census counts the retail images that rely on that.
 
-**`sms` and `gg` decode the same ports above 06h.** Ports 0 to 6 belong to the
-Game Gear only in its own mode; in Master System mode they decode as a Master
-System's.
+**`sms` and `gg` decode the same ports from 40h up, and differ below.** A
+Master System mirrors 3Eh and 3Fh on every port below 40h. On a Game Gear only
+3Eh and 3Fh reach those registers, in either mode, and ports 0 to 6 are its own
+in its own mode and reach nothing in Master System mode, where `decoding()`
+answers `ports.MASTER_SYSTEM_MODE`.
 
 ## Before calling anything finished
 

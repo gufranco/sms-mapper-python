@@ -10,7 +10,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-Hans.md) | [繁�
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **813** retail ones on a board with registers, **24** quotes located in the manual and the pinned sources, **12** boards, **845** tests, **100%** statement and branch coverage, no dependencies beyond the standard library
+**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **813** retail ones on a board with registers, **24** quotes located in the manual and the pinned sources, **12** boards, **848** tests, **100%** statement and branch coverage, no dependencies beyond the standard library
 
 ```python
 import smsmapper
@@ -301,7 +301,7 @@ Each module has a test file beside it, named after it, and each runs on its own 
 
 - _Software Reference Manual for the SEGA Mark III Console_, Sega, undated, a retyped copy. 45 pages, 184,840 bytes, SHA-256 `166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce`. It is not redistributable and is not in this repository. `python3 -m conformance.documents` downloads it from https://segaretro.org/images/d/d6/SoftwareReferenceManualForSegaMarkIIIEU.pdf and refuses any other file.
 - MAME, `src/devices/bus/sega8/rom.cpp`, `src/devices/machine/eepromser.cpp`, `hash/sms.xml` and `hash/gamegear.xml` at commit `94fc55c9692b180dcb608e2e222e48315db5017a`, https://github.com/mamedev/mame, for every third-party board and the boards each image is on. Facts only; no code is taken.
-- Genesis Plus GX, `core/io_ctrl.c`, `core/system.c` and `core/cart_hw/sms_cart.c` at commit `a5834b3df455c49bb97bfaa328c20845831f576b`, https://github.com/ekeeke/Genesis-Plus-GX, for the consoles the manual does not describe. Facts only; no code is taken.
+- Genesis Plus GX, `core/io_ctrl.c`, `core/memz80.c`, `core/system.c` and `core/cart_hw/sms_cart.c` at commit `a5834b3df455c49bb97bfaa328c20845831f576b`, https://github.com/ekeeke/Genesis-Plus-GX, for the consoles the manual does not describe. Facts only; no code is taken.
 
 ## Citing this
 

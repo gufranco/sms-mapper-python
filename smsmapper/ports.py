@@ -30,6 +30,12 @@ HANDHELD = "game gear port "
 
 HANDHELD_PORTS = 7
 
+MASTER_SYSTEM_MODE = "game gear in master system mode"
+
+CONTROL_SPAN = 0x40
+
+FULLY_DECODED = (0x3E, 0x3F)
+
 LOW_BYTE = 0xFF
 
 DECODED = 0xC1
@@ -52,6 +58,18 @@ DECODE: dict[tuple[int, str], str] = {
 
 def decode(model: str, port: int, direction: str) -> str:
     number = port & LOW_BYTE
-    if models.lookup(model).handheld and number < HANDHELD_PORTS:
+    if model == MASTER_SYSTEM_MODE or models.lookup(model).handheld:
+        return _handheld(model, number, direction)
+    return _decoded(number, direction)
+
+
+def _handheld(model: str, number: int, direction: str) -> str:
+    if number < HANDHELD_PORTS and model != MASTER_SYSTEM_MODE:
         return f"{HANDHELD}{number}"
+    if number < CONTROL_SPAN and number not in FULLY_DECODED:
+        return NOTHING
+    return _decoded(number, direction)
+
+
+def _decoded(number: int, direction: str) -> str:
     return DECODE.get((number & DECODED, direction), NOTHING)

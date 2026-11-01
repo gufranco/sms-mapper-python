@@ -244,6 +244,17 @@ class GameGearTest(unittest.TestCase):
         # Assert
         self.assertEqual((console.nmi, seen), (True, 0xFF))
 
+    def test_in_master_system_mode_a_write_to_port_2_leaves_the_slots_alone(self) -> None:
+        # Arrange
+        console = smsmapper.Console("gg", handheld_mode=False)
+        before = console.memory.control
+
+        # Act
+        console.write_port(0x02, 0xFF)
+
+        # Assert
+        self.assertEqual(console.memory.control, before)
+
     def test_the_registers_power_on_at_the_values_genesis_plus_gx_uses(self) -> None:
         # Arrange
         console = smsmapper.Console("gg")

@@ -10,7 +10,7 @@ Sega の SG-1000 Mark III、2 機種のマスターシステム、ゲームギ�
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-異なるマスターシステムとゲームギアのイメージ **2,608** 本をそれぞれ **600** フレーム起動、レジスタのあるボードに載った市販の **813** 本で性質の不合格 **0** 件、マニュアルと固定したソースで所在を確認した引用 **24** 件、ボード **12** 種、テスト **845** 件、ステートメントとブランチのカバレッジ **100%**、標準ライブラリ以外への依存関係なし
+異なるマスターシステムとゲームギアのイメージ **2,608** 本をそれぞれ **600** フレーム起動、レジスタのあるボードに載った市販の **813** 本で性質の不合格 **0** 件、マニュアルと固定したソースで所在を確認した引用 **24** 件、ボード **12** 種、テスト **848** 件、ステートメントとブランチのカバレッジ **100%**、標準ライブラリ以外への依存関係なし
 
 ```python
 import smsmapper
@@ -301,7 +301,7 @@ python3 smsmapper/console.test.py
 
 - _Software Reference Manual for the SEGA Mark III Console_、Sega、日付なし、打ち直しの写し。45 ページ、184,840 バイト、SHA-256 `166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce`。再配布できないので、このリポジトリには入っていません。`python3 -m conformance.documents` が https://segaretro.org/images/d/d6/SoftwareReferenceManualForSegaMarkIIIEU.pdf からダウンロードし、ほかのファイルは拒否します。
 - MAME の `src/devices/bus/sega8/rom.cpp`、`src/devices/machine/eepromser.cpp`、`hash/sms.xml`、`hash/gamegear.xml`、コミット `94fc55c9692b180dcb608e2e222e48315db5017a`、https://github.com/mamedev/mame 。すべてのサードパーティ製ボードと、各イメージが載るボードのために。事実のみで、コードは取り込んでいません。
-- Genesis Plus GX の `core/io_ctrl.c`、`core/system.c`、`core/cart_hw/sms_cart.c`、コミット `a5834b3df455c49bb97bfaa328c20845831f576b`、https://github.com/ekeeke/Genesis-Plus-GX 。マニュアルが扱わない本体のために。事実のみで、コードは取り込んでいません。
+- Genesis Plus GX の `core/io_ctrl.c`、`core/memz80.c`、`core/system.c`、`core/cart_hw/sms_cart.c`、コミット `a5834b3df455c49bb97bfaa328c20845831f576b`、https://github.com/ekeeke/Genesis-Plus-GX 。マニュアルが扱わない本体のために。事実のみで、コードは取り込んでいません。
 
 ## 引用
 

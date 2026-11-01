@@ -96,15 +96,44 @@ class GameGearTest(unittest.TestCase):
         # Assert
         self.assertEqual(found, [f"{ports.HANDHELD}{number}" for number in numbers])
 
-    def test_port_7_falls_back_to_the_master_system_decode(self) -> None:
+    def test_below_40_only_3e_and_3f_reach_the_control_registers(self) -> None:
         # Arrange
-        port = 0x07
+        numbers = (0x07, 0x08, 0x3C, 0x3D, 0x3E, 0x3F)
 
         # Act
-        found = ports.decode("gg", port, ports.WRITE)
+        found = [ports.decode("gg", number, ports.WRITE) for number in numbers]
 
         # Assert
-        self.assertEqual(found, ports.IO_CONTROL)
+        self.assertEqual(
+            found,
+            [ports.NOTHING] * 4 + [ports.MEMORY_CONTROL, ports.IO_CONTROL],
+        )
+
+    def test_in_master_system_mode_ports_0_to_6_reach_nothing(self) -> None:
+        # Arrange
+        numbers = range(7)
+
+        # Act
+        found = [
+            ports.decode(ports.MASTER_SYSTEM_MODE, number, direction)
+            for number in numbers
+            for direction in (ports.READ, ports.WRITE)
+        ]
+
+        # Assert
+        self.assertEqual(found, [ports.NOTHING] * 14)
+
+    def test_in_master_system_mode_the_full_address_still_decides(self) -> None:
+        # Arrange
+        asked = [(0x02, ports.WRITE), (0x3E, ports.WRITE), (0x3F, ports.WRITE), (0xDC, ports.READ)]
+
+        # Act
+        found = [ports.decode(ports.MASTER_SYSTEM_MODE, *one) for one in asked]
+
+        # Assert
+        self.assertEqual(
+            found, [ports.NOTHING, ports.MEMORY_CONTROL, ports.IO_CONTROL, ports.PORT_A]
+        )
 
     def test_a_master_system_has_no_port_6(self) -> None:
         # Arrange

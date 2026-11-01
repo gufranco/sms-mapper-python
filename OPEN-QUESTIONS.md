@@ -8,7 +8,7 @@ Every entry is also in [`conformance/hardware.json`](conformance/hardware.json) 
 
 ## What would settle almost all of them
 
-A Master System of each revision, a Japanese one, a Game Gear and a cartridge whose code runs from RAM and writes what it reads to save memory. Such a cartridge can switch slots off, write the paging registers, drive port 3F and read everything back, which settles the bank shift, the slot enables, the open bus and the region lines at once. A Game Gear and an EverDrive GG are available; no Master System is.
+A Master System of each revision, a Japanese one, a Game Gear and a cartridge whose code runs from RAM and writes what it reads to save memory. Such a cartridge can switch slots off, write the paging registers, drive port 3F and read everything back, which settles the bank shift, the slot enables, the open bus and the region lines at once. A Game Gear with an EverDrive GG and a Japanese Master System are available; no export Master System or Master System II is.
 
 ## What the manual does not print
 
@@ -131,6 +131,16 @@ A Master System of each revision, a Japanese one, a Game Gear and a cartridge wh
 **Where the value came from.** Genesis Plus GX system.c, which skips the pause NMI in Game Gear mode.
 
 **What would settle it.** Press START on a Game Gear running a Master System cartridge with an NMI handler that counts.
+
+### Which ports below 40h reach the control registers on a Game Gear
+
+**This package does.** Below 40h only ports 3Eh and 3Fh reach the memory and I/O control registers, in either mode. Ports 0 to 6 are the Game Gear's own in its own mode and reach nothing in Master System mode.
+
+**Why it is open.** No Sega document for the Game Gear is known to be public. A Master System decodes only A7, A6 and A0, so every even port below 40h is a mirror of 3Eh, and the Game Gear's I/O chip does not follow it.
+
+**Where the value came from.** Genesis Plus GX memz80.c z80_gg_port_w and z80_gg_port_r, whose comment says the Game Gear I/O chip decodes the full address and fixes G-LOC Air Battle. R.C. Grand Prix (USA), a retail Game Gear cartridge that runs in Master System mode, CRC32 56201996, writes FFh to port 02h as it starts; on a Master System's decode that switches the cartridge off and the screen stays blank.
+
+**What would settle it.** Run R.C. Grand Prix (USA) on a Game Gear: it reaches its title only if port 02h misses the memory control register.
 
 ### Whether the board adds a wait state anywhere
 

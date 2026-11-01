@@ -10,7 +10,7 @@
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** 個不同的 Master System 和 Game Gear 映像檔各啟動 **600** 幀，在帶暫存器的電路板上的 **813** 個零售映像檔中屬性失敗為 **0**，在手冊和固定的原始碼中找到 **24** 處引文，**12** 種電路板，**845** 個測試，**100%** 語句和分支覆蓋率，除標準庫外沒有依賴套件
+**2,608** 個不同的 Master System 和 Game Gear 映像檔各啟動 **600** 幀，在帶暫存器的電路板上的 **813** 個零售映像檔中屬性失敗為 **0**，在手冊和固定的原始碼中找到 **24** 處引文，**12** 種電路板，**848** 個測試，**100%** 語句和分支覆蓋率，除標準庫外沒有依賴套件
 
 ```python
 import smsmapper
@@ -301,7 +301,7 @@ python3 smsmapper/console.test.py
 
 - _Software Reference Manual for the SEGA Mark III Console_，世嘉，未註明日期，重新打字的副本。45 頁，184,840 位元組，SHA-256 `166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce`。它不可再分發，不在本儲存庫中。`python3 -m conformance.documents` 從 https://segaretro.org/images/d/d6/SoftwareReferenceManualForSegaMarkIIIEU.pdf 下載它，並拒絕任何其他檔案。
 - MAME 的 `src/devices/bus/sega8/rom.cpp`、`src/devices/machine/eepromser.cpp`、`hash/sms.xml` 和 `hash/gamegear.xml`，提交 `94fc55c9692b180dcb608e2e222e48315db5017a`，https://github.com/mamedev/mame ，用於每種第三方電路板以及每個映像檔所在的電路板。只取事實，不取程式碼。
-- Genesis Plus GX 的 `core/io_ctrl.c`、`core/system.c` 和 `core/cart_hw/sms_cart.c`，提交 `a5834b3df455c49bb97bfaa328c20845831f576b`，https://github.com/ekeeke/Genesis-Plus-GX ，用於手冊沒有描述的主機。只取事實，不取程式碼。
+- Genesis Plus GX 的 `core/io_ctrl.c`、`core/memz80.c`、`core/system.c` 和 `core/cart_hw/sms_cart.c`，提交 `a5834b3df455c49bb97bfaa328c20845831f576b`，https://github.com/ekeeke/Genesis-Plus-GX ，用於手冊沒有描述的主機。只取事實，不取程式碼。
 
 ## 引用
 
