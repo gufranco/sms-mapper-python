@@ -315,7 +315,7 @@ class RunTest(unittest.TestCase):
         run = harness.Run(image)
 
         # Assert
-        self.assertEqual((run.cpu.registers.sp, run.console.read(0xC000)), (0xDFF0, 0xA8))
+        self.assertEqual((run.cpu.registers.sp, run.console.read(0xC000)), (0xDFF0, 0xAB))
 
     def test_a_game_gear_starts_from_its_reset_values(self) -> None:
         # Arrange

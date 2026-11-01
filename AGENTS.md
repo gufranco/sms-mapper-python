@@ -123,8 +123,9 @@ it. What the census asks about is paging, which happens long before a game
 needs either.
 
 A Master System run starts where the export boot program hands over: the
-stack at DFF0h and RAM C000h holding A8h, as `sega-vdp-python`'s census board
-does. A Game Gear run starts from its reset values.
+stack at DFF0h and RAM C000h holding ABh, the values `sega-sms-python` reads
+when it runs the original BIOS 1.3 and 2.0 up to the cartridge's first
+instruction. A Game Gear run starts from its reset values.
 
 ## Test cartridges
 
