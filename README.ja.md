@@ -10,7 +10,7 @@ Sega の SG-1000 Mark III、2 機種のマスターシステム、ゲームギ�
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-異なるマスターシステムとゲームギアのイメージ **2,608** 本をそれぞれ **600** フレーム起動、レジスタのあるボードに載った市販の **813** 本で性質の不合格 **0** 件、マニュアルと固定したソースで所在を確認した引用 **24** 件、ボード **12** 種、テスト **852** 件、ステートメントとブランチのカバレッジ **100%**、標準ライブラリ以外への依存関係なし
+異なるマスターシステムとゲームギアのイメージ **2,608** 本をそれぞれ **600** フレーム起動、レジスタのあるボードに載った市販の **813** 本で性質の不合格 **0** 件、マニュアルと固定したソースで所在を確認した引用 **24** 件、ボード **12** 種、テスト **853** 件、ステートメントとブランチのカバレッジ **100%**、標準ライブラリ以外への依存関係なし
 
 ```python
 import smsmapper

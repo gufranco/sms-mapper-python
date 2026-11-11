@@ -10,7 +10,7 @@
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sms-mapper-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sms-mapper-python)
 [![license](https://img.shields.io/github/license/gufranco/sms-mapper-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，在带寄存器的电路板上的 **813** 个零售映像中属性失败为 **0**，在手册和固定的源码中定位到 **24** 处引文，**12** 种电路板，**852** 个测试，**100%** 语句和分支覆盖率，除标准库外无依赖
+**2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，在带寄存器的电路板上的 **813** 个零售映像中属性失败为 **0**，在手册和固定的源码中定位到 **24** 处引文，**12** 种电路板，**853** 个测试，**100%** 语句和分支覆盖率，除标准库外无依赖
 
 ```python
 import smsmapper
